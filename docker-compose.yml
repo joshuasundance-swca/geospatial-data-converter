@@ -11,5 +11,6 @@ services:
       "streamlit", "run",
       "/home/appuser/geospatial-data-converter/app.py",
       "--server.port", "${APP_PORT:-7860}",
-      "--server.address", "0.0.0.0"
+      "--server.address", "0.0.0.0",
+      "--server.enableXsrfProtection=false"
     ]
