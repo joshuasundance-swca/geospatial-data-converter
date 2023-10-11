@@ -16,11 +16,5 @@ COPY geospatial-data-converter/ /home/appuser/geospatial-data-converter/
 WORKDIR /workspace
 EXPOSE 7860
 
-CMD [
-    "streamlit", "run",
-    "/home/appuser/geospatial-data-converter/app.py",
-    "--server.port", "7860",
-    "--server.address", "0.0.0.0",
-    "--server.enableXsrfProtection=false"
-]
+CMD ["streamlit", "run", "/home/appuser/geospatial-data-converter/app.py", "--server.port", "7860", "--server.address", "0.0.0.0", "--server.enableXsrfProtection=false"]
 #CMD ["/bin/bash"]
