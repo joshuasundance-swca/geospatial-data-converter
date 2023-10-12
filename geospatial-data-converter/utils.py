@@ -6,7 +6,8 @@ from typing import BinaryIO
 
 import geopandas as gpd
 
-from kml_tricks import read_ge_file
+# from kml_tricks import read_ge_file
+from kml_tricks_before import readge as read_ge_file
 
 output_format_dict = {
     "ESRI Shapefile": ("shp", "zip", "application/zip"),  # must be zipped
