@@ -6,9 +6,7 @@ from typing import BinaryIO
 
 import geopandas as gpd
 
-# from kml_tricks import read_ge_file
-# from kml_tricks_before import readge as read_ge_file
-from kml_tricks_refactor import load_ge_data as read_ge_file
+from kml_tricks import load_ge_data
 
 output_format_dict = {
     "ESRI Shapefile": ("shp", "zip", "application/zip"),  # must be zipped
@@ -39,7 +37,7 @@ def read_file(file: BinaryIO, *args, **kwargs) -> gpd.GeoDataFrame:
             tmp_file_path = os.path.join(tmp_dir, file.name)
             with open(tmp_file_path, "wb") as tmp_file:
                 tmp_file.write(file.read())
-            return read_ge_file(tmp_file_path)
+            return load_ge_data(tmp_file_path)
     return gpd.read_file(file, *args, engine="pyogrio", **kwargs)
 
 
