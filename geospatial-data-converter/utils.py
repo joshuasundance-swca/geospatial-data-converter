@@ -6,6 +6,8 @@ from typing import BinaryIO
 
 import geopandas as gpd
 
+from kml_tricks import read_ge_file
+
 output_format_dict = {
     "ESRI Shapefile": ("shp", "zip", "application/zip"),  # must be zipped
     "OpenFileGDB": ("gdb", "zip", "application/zip"),  # must be zipped
@@ -17,7 +19,9 @@ output_format_dict = {
 
 def read_file(file: BinaryIO, *args, **kwargs) -> gpd.GeoDataFrame:
     """Read a file and return a GeoDataFrame"""
-    if file.name.lower().endswith(".zip"):
+    basename, ext = os.path.splitext(os.path.basename(file.name))
+    ext = ext.lower().strip(".")
+    if ext == "zip":
         with TemporaryDirectory() as tmp_dir:
             tmp_file_path = os.path.join(tmp_dir, file.name)
             with open(tmp_file_path, "wb") as tmp_file:
@@ -28,6 +32,12 @@ def read_file(file: BinaryIO, *args, **kwargs) -> gpd.GeoDataFrame:
                 engine="pyogrio",
                 **kwargs,
             )
+    elif ext in ("kml", "kmz"):
+        with TemporaryDirectory() as tmp_dir:
+            tmp_file_path = os.path.join(tmp_dir, file.name)
+            with open(tmp_file_path, "wb") as tmp_file:
+                tmp_file.write(file.read())
+            return read_ge_file(tmp_file_path)
     return gpd.read_file(file, *args, engine="pyogrio", **kwargs)
 
 
