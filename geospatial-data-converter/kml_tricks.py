@@ -15,7 +15,6 @@ def parse_description_to_gdf(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
                 html_df = pd.read_html(StringIO(desc), flavor="lxml")
                 yield html_df[-1].T
             except (lxml.etree.ParserError, lxml.etree.XMLSyntaxError) as e:
-                print(desc)
                 raise pd.errors.ParserError from e
 
     parsed_dataframes = list(_gen())
