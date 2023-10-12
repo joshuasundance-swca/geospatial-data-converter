@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: geospatial-data-converter
-        image: joshuasundance/geospatial-data-converter:0.0.2
+        image: joshuasundance/geospatial-data-converter:0.0.3
         imagePullPolicy: Always
         resources:
           requests:
