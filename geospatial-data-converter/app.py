@@ -8,7 +8,7 @@ from restgdf import Rest
 
 from utils import read_file, convert, output_format_dict
 
-__version__ = "0.0.3"
+__version__ = "0.1.0"
 
 
 def st_init_null(*variable_names) -> None:
