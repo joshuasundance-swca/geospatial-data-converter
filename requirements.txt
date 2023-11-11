@@ -2,6 +2,6 @@ aiohttp==3.8.6
 beautifulsoup4==4.12.2
 geopandas==0.14.0
 lxml==4.9.3
-pyogrio==0.7.1
+pyogrio==0.7.2
 restgdf==0.0.13
 streamlit==1.28.0
