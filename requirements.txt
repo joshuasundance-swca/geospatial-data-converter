@@ -3,5 +3,5 @@ beautifulsoup4==4.12.2
 geopandas==0.14.0
 lxml==4.9.3
 pyogrio==0.7.2
-restgdf==0.0.13
+restgdf==0.8.2
 streamlit==1.28.1
