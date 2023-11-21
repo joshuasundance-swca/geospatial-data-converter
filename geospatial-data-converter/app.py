@@ -63,11 +63,13 @@ if st.session_state.arcgis_url:
     st.session_state.gdf = gdf
 
 elif st.session_state.uploaded_file is not None:
+    # try:
     st.session_state.fn_without_extension, _ = os.path.splitext(
         os.path.basename(st.session_state.uploaded_file.name),
     )
-
     st.session_state.gdf = read_file(st.session_state.uploaded_file)
+    # except AttributeError:
+    #     pass # there is a lingering file from the previous instance, but it can be ignored
 
 if st.session_state.gdf is not None:
     st.selectbox(
@@ -103,6 +105,8 @@ if st.session_state.gdf is not None:
         "*(geometry omitted for display purposes)*",
     )
 
-    display_df = st.session_state.gdf.drop(columns=["geometry"])
+    display_df = st.session_state.gdf.drop(columns=["geometry"]).to_dict(
+        orient="records",
+    )
 
     st.dataframe(display_df)
