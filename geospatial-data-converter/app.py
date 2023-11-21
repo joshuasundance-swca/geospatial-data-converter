@@ -4,7 +4,7 @@ import os
 import geopandas as gpd
 import streamlit as st
 from aiohttp import ClientSession
-from restgdf import Rest
+from restgdf import FeatureLayer
 
 from utils import read_file, convert, output_format_dict
 
@@ -49,7 +49,7 @@ st.file_uploader(
 async def get_arcgis_data(url: str) -> tuple[str, gpd.GeoDataFrame]:
     """Get data from an ArcGIS featurelayer"""
     async with ClientSession() as session:
-        rest = await Rest.from_url(url, session=session)
+        rest = await FeatureLayer.from_url(url, session=session)
         name = rest.name
         gdf = await rest.getgdf()
     return name, gdf
