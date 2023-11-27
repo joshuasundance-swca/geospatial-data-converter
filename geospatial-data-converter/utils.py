@@ -3,7 +3,6 @@ import os
 import zipfile
 from tempfile import TemporaryDirectory
 from typing import BinaryIO
-
 import geopandas as gpd
 
 from kml_tricks import load_ge_data
@@ -65,6 +64,9 @@ def convert(gdf: gpd.GeoDataFrame, output_name: str, output_format: str) -> byte
         if output_format == "CSV":
             gdf.to_csv(out_path)
         else:
+            # if output_format == 'KML': # need to longitude and latitude columns
+            #     # gdf = gdf.apply(lambda row: swap_coordinates(row), axis=1)
+            #     gdf['geometry'] = gdf['geometry'].apply(swap_coordinates)
             gdf.to_file(out_path, driver=output_format, engine="pyogrio")
 
         if output_format in ("ESRI Shapefile", "OpenFileGDB"):

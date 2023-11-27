@@ -5,6 +5,15 @@ import bs4
 import geopandas as gpd
 import lxml  # nosec
 import pandas as pd
+from shapely.geometry import (
+    Point,
+    LineString,
+    Polygon,
+    MultiPoint,
+    MultiLineString,
+    MultiPolygon,
+    LinearRing,
+)
 
 
 def parse_descriptions_to_geodf(geodf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
@@ -41,6 +50,48 @@ def parse_descriptions_to_geodf(geodf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     return result_geodf
 
 
+def swap_coordinates(geometry):
+    """
+    Swap the latitude and longitude of Shapely Point, LineString, Polygon,
+    MultiPoint, MultiLineString, MultiPolygon, or LinearRing geometry.
+
+    Parameters:
+    - geometry: Shapely geometry (Point, LineString, Polygon, MultiPoint,
+                MultiLineString, MultiPolygon, or LinearRing)
+
+    Returns:
+    - Shapely geometry with swapped coordinates
+    """
+
+    def swap_coords(coords):
+        return [(coord[1], coord[0]) for coord in coords]
+
+    if isinstance(geometry, Point):
+        return Point([geometry.y, geometry.x])
+    elif isinstance(geometry, MultiPoint):
+        return MultiPoint(
+            [Point(swap_coords(point.coords)) for point in geometry.geoms],
+        )
+    elif isinstance(geometry, LineString):
+        return LineString(swap_coords(geometry.coords))
+    elif isinstance(geometry, MultiLineString):
+        return MultiLineString(
+            [LineString(swap_coords(line.coords)) for line in geometry.geoms],
+        )
+    elif isinstance(geometry, Polygon):
+        exterior_coords = swap_coords(geometry.exterior.coords)
+        interior_coords = [
+            swap_coords(interior.coords) for interior in geometry.interiors
+        ]
+        return Polygon(exterior_coords, interior_coords)
+    elif isinstance(geometry, MultiPolygon):
+        return MultiPolygon([swap_coordinates(poly) for poly in geometry.geoms])
+    elif isinstance(geometry, LinearRing):
+        return LinearRing(swap_coords(geometry.coords))
+    else:
+        raise ValueError("Unsupported geometry type")
+
+
 def load_kmz_as_geodf(file_path: str) -> gpd.GeoDataFrame:
     """Loads a KMZ file into a GeoPandas DataFrame, assuming the KMZ contains one KML file"""
 
@@ -67,7 +118,6 @@ def load_kmz_as_geodf(file_path: str) -> gpd.GeoDataFrame:
 
 def load_ge_file(file_path: str) -> gpd.GeoDataFrame:
     """Loads a KML or KMZ file and parses its descriptions into a GeoDataFrame"""
-
     if file_path.endswith(".kml"):
         return parse_descriptions_to_geodf(
             gpd.read_file(file_path, driver="KML", engine="pyogrio"),
@@ -134,7 +184,6 @@ def extract_kml_code_from_file(file_path: str) -> str:
 
 def extract_data_from_ge_file(file_path: str) -> gpd.GeoDataFrame:
     """Extracts data from a Google Earth file (KML or KMZ) into a GeoDataFrame using SimpleData tags, excluding embedded tables in feature descriptions"""
-
     data_df = extract_data_from_kml_code(extract_kml_code_from_file(file_path))
 
     if file_path.endswith(".kmz"):
@@ -147,7 +196,7 @@ def extract_data_from_ge_file(file_path: str) -> gpd.GeoDataFrame:
         geometry=ge_file_gdf["geometry"],
         crs=ge_file_gdf.crs,
     )
-
+    geo_df["geometry"] = geo_df["geometry"].apply(swap_coordinates)
     return geo_df
 
 
