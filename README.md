@@ -57,6 +57,9 @@ This project showcases a simple geospatial data converter using [Streamlit](http
 2. Run in terminal: `docker compose up`
 3. Open http://localhost:7860 in your browser
 
+## Run Tests (with local Docker container)
+1. Run in terminal: 'docker compose run test pytest'
+
 ## Kubernetes
 1. Clone the repo. Navigate to cloned repo directory
 2. Run bash script: `/bin/bash ./kubernetes/deploy.sh`
