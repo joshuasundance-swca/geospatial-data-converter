@@ -11,7 +11,7 @@ try:
 except ImportError:
     from .utils import read_file, convert, output_format_dict
 
-__version__ = "0.1.1"
+__version__ = "0.2.1"
 
 
 def st_init_null(*variable_names) -> None:
