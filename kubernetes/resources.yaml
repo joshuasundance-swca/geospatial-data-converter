@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: geospatial-data-converter-deployment
+  name: geospatial_data_converter-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: geospatial-data-converter
+      app: geospatial_data_converter
   template:
     metadata:
       labels:
-        app: geospatial-data-converter
+        app: geospatial_data_converter
     spec:
       containers:
-      - name: geospatial-data-converter
-        image: joshuasundance/geospatial-data-converter:0.1.1
+      - name: geospatial_data_converter
+        image: joshuasundance/geospatial_data_converter:0.1.1
         imagePullPolicy: Always
         resources:
           requests:
@@ -29,15 +29,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: geospatial-data-converter-service
+  name: geospatial_data_converter-service
   # configure on Azure and uncomment below to use a vnet
 #  annotations:
 #    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 #    service.beta.kubernetes.io/azure-load-balancer-ipv4: vnet.ip.goes.here
-#    service.beta.kubernetes.io/azure-dns-label-name: "geospatial-data-converter"
+#    service.beta.kubernetes.io/azure-dns-label-name: "geospatial_data_converter"
 spec:
   selector:
-    app: geospatial-data-converter
+    app: geospatial_data_converter
   ports:
     - protocol: TCP
       port: 80
@@ -47,11 +47,11 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: geospatial-data-converter-network-policy
+  name: geospatial_data_converter-network-policy
 spec:
   podSelector:
     matchLabels:
-      app: geospatial-data-converter
+      app: geospatial_data_converter
   policyTypes:
   - Ingress
   ingress:

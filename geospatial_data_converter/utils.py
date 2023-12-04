@@ -5,7 +5,10 @@ from tempfile import TemporaryDirectory
 from typing import BinaryIO
 import geopandas as gpd
 
-from kml_tricks import load_ge_data
+try:
+    from kml_tricks import load_ge_data
+except ImportError:
+    from .kml_tricks import load_ge_data
 
 output_format_dict = {
     "ESRI Shapefile": ("shp", "zip", "application/zip"),  # must be zipped
@@ -22,7 +25,7 @@ def read_file(file: BinaryIO, *args, **kwargs) -> gpd.GeoDataFrame:
     ext = ext.lower().strip(".")
     if ext == "zip":
         with TemporaryDirectory() as tmp_dir:
-            tmp_file_path = os.path.join(tmp_dir, file.name)
+            tmp_file_path = os.path.join(tmp_dir, f"{basename}.{ext}")
             with open(tmp_file_path, "wb") as tmp_file:
                 tmp_file.write(file.read())
             return gpd.read_file(
@@ -33,7 +36,10 @@ def read_file(file: BinaryIO, *args, **kwargs) -> gpd.GeoDataFrame:
             )
     elif ext in ("kml", "kmz"):
         with TemporaryDirectory() as tmp_dir:
-            tmp_file_path = os.path.join(tmp_dir, file.name)
+            tmp_file_path = os.path.join(tmp_dir, f"{basename}.{ext}")
+            print(file.name)
+            print(basename)
+            print(tmp_file_path)
             with open(tmp_file_path, "wb") as tmp_file:
                 tmp_file.write(file.read())
             return load_ge_data(tmp_file_path)
@@ -60,7 +66,6 @@ def convert(gdf: gpd.GeoDataFrame, output_name: str, output_format: str) -> byte
     """Convert a GeoDataFrame to the specified format"""
     with TemporaryDirectory() as tmpdir:
         out_path = os.path.join(tmpdir, output_name)
-
         if output_format == "CSV":
             gdf.to_csv(out_path)
         else:

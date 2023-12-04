@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  geospatial-data-converter:
-    image: geospatial-data-converter:latest
+  geospatial_data_converter:
+    image: geospatial_data_converter:latest
     build: .
     ports:
       - "${APP_PORT:-7860}:${APP_PORT:-7860}"
@@ -14,3 +14,8 @@ services:
       "--server.address", "0.0.0.0",
       "--server.enableXsrfProtection=false"
     ]
+  test:
+    image: geospatial_data_converter:latest  # Use the same image as your main service
+    build: .
+    working_dir: /home/appuser
+    command: ["/bin/bash"]

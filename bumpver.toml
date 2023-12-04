@@ -14,5 +14,5 @@ push = true
 "bumpver.toml" = [
     'current_version = "{version}"',
 ]
-"geospatial-data-converter/app.py" = ['__version__ = "{version}"']
-"kubernetes/resources.yaml" = ['        image: joshuasundance/geospatial-data-converter:{version}']
+"geospatial_data_converter/app.py" = ['__version__ = "{version}"']
+"kubernetes/resources.yaml" = ['        image: joshuasundance/geospatial_data_converter:{version}']

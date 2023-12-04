@@ -12,9 +12,9 @@ COPY ./requirements.txt /home/appuser/requirements.txt
 RUN pip install --user --no-cache-dir  --upgrade -r /home/appuser/requirements.txt
 
 COPY geospatial_data_converter/ /home/appuser/geospatial_data_converter/
+COPY tests/ /home/appuser/tests/
 
 WORKDIR /workspace
 EXPOSE 7860
 
 CMD ["streamlit", "run", "/home/appuser/geospatial_data_converter/app.py", "--server.port", "7860", "--server.address", "0.0.0.0", "--server.enableXsrfProtection=false"]
-#CMD ["/bin/bash"]
