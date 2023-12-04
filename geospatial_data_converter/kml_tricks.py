@@ -52,7 +52,7 @@ def parse_descriptions_to_geodf(geodf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
 
 def swap_coordinates(geometry):
     """
-    Swap the latitude and longitude of Shapely Point, LineString, Polygon,
+    Swap the latitude and longitude of a shapely Point, LineString, Polygon,
     MultiPoint, MultiLineString, MultiPolygon, or LinearRing geometry.
 
     Parameters:
