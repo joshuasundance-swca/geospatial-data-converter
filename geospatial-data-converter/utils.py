@@ -1,18 +1,20 @@
 import io
 import os
 import zipfile
+import geopandas as gpd
+import topojson
+
 from tempfile import TemporaryDirectory
 from typing import BinaryIO
-import geopandas as gpd
-
 from kml_tricks import load_ge_data
 
 output_format_dict = {
-    "ESRI Shapefile": ("shp", "zip", "application/zip"),  # must be zipped
-    "OpenFileGDB": ("gdb", "zip", "application/zip"),  # must be zipped
-    "GeoJSON": ("geojson", "geojson", "application/geo+json"),
     "CSV": ("csv", "csv", "text/csv"),
     "KML": ("kml", "kml", "application/vnd.google-earth.kml+xml"),
+    "GeoJSON": ("geojson", "geojson", "application/geo+json"),
+    "TopoJSON": ("topojson", "topojson", "application/json"),
+    "ESRI Shapefile": ("shp", "zip", "application/zip"),  # must be zipped
+    "OpenFileGDB": ("gdb", "zip", "application/zip"),  # must be zipped
 }
 
 
@@ -34,9 +36,6 @@ def read_file(file: BinaryIO, *args, **kwargs) -> gpd.GeoDataFrame:
     elif ext in ("kml", "kmz"):
         with TemporaryDirectory() as tmp_dir:
             tmp_file_path = os.path.join(tmp_dir, f"{basename}.{ext}")
-            print(file.name)
-            print(basename)
-            print(tmp_file_path)
             with open(tmp_file_path, "wb") as tmp_file:
                 tmp_file.write(file.read())
             return load_ge_data(tmp_file_path)
@@ -65,6 +64,9 @@ def convert(gdf: gpd.GeoDataFrame, output_name: str, output_format: str) -> byte
         out_path = os.path.join(tmpdir, output_name)
         if output_format == "CSV":
             gdf.to_csv(out_path)
+        elif output_format == "TopoJSON":
+            topojson_data = topojson.Topology(gdf)
+            topojson_data.to_json(out_path)
         else:
             gdf.to_file(out_path, driver=output_format, engine="pyogrio")
 

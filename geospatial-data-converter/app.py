@@ -68,8 +68,6 @@ elif st.session_state.uploaded_file is not None:
         os.path.basename(st.session_state.uploaded_file.name),
     )
     st.session_state.gdf = read_file(st.session_state.uploaded_file)
-    # except AttributeError:
-    #     pass # there is a lingering file from the previous instance, but it can be ignored
 
 if st.session_state.gdf is not None:
     st.selectbox(
