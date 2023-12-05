@@ -52,7 +52,7 @@ def parse_descriptions_to_geodf(geodf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
 
 def swap_coordinates(geometry):
     """
-    Swap the latitude and longitude of Shapely Point, LineString, Polygon,
+    Swap the latitude and longitude of a shapely Point, LineString, Polygon,
     MultiPoint, MultiLineString, MultiPolygon, or LinearRing geometry.
 
     Parameters:
@@ -131,7 +131,7 @@ def extract_data_from_kml_code(kml_code: str) -> pd.DataFrame:
     """Extracts data from KML code into a DataFrame using SimpleData tags, excluding embedded tables in feature descriptions"""
 
     # Parse the KML source code
-    soup = bs4.BeautifulSoup(kml_code, "html.parser")
+    soup = bs4.BeautifulSoup(kml_code, features="xml")
 
     # Find all SchemaData tags (representing rows)
     schema_data_tags = soup.find_all("schemadata")

@@ -1,16 +1,26 @@
 version: '3.8'
 
 services:
+  test:
+    container_name: geospatial-data-converter-test
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test
+    volumes:
+      - ./tests/:/home/appuser/tests/
+      - ./pyproject.toml:/home/appuser/pyproject.toml
+    working_dir: /home/appuser
+    command: ["pytest"]
+
   geospatial-data-converter:
-    image: geospatial-data-converter:latest
-    build: .
+    container_name: geospatial-data-converter
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    depends_on:
+      test:
+        condition: service_completed_successfully
     ports:
       - "${APP_PORT:-7860}:${APP_PORT:-7860}"
-    working_dir: /workspace
-    command: [
-      "streamlit", "run",
-      "/home/appuser/geospatial-data-converter/app.py",
-      "--server.port", "${APP_PORT:-7860}",
-      "--server.address", "0.0.0.0",
-      "--server.enableXsrfProtection=false"
-    ]

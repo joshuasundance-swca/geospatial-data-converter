@@ -39,7 +39,7 @@ This project showcases a simple geospatial data converter using [Streamlit](http
 - User-friendly interface for easy data conversion
 - Supports conversion from the following input formats:
   - ArcGIS featurelayer URL
-  - Uploaded file: KML, KMZ, GeoJSON, ZIP
+  - Uploaded file: KML, KMZ, GeoJSON, ZIP, etc
 - Provides data in the selected output format
 - Presents data preview (geometry omitted for display purposes)
 - Download button for the converted data
@@ -56,6 +56,9 @@ This project showcases a simple geospatial data converter using [Streamlit](http
 1. Clone the repo. Navigate to cloned repo directory
 2. Run in terminal: `docker compose up`
 3. Open http://localhost:7860 in your browser
+
+## Run Tests (with local Docker container)
+1. Run in terminal: `docker compose run test`
 
 ## Kubernetes
 1. Clone the repo. Navigate to cloned repo directory
