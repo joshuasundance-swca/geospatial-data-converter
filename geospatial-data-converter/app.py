@@ -6,10 +6,7 @@ import streamlit as st
 from aiohttp import ClientSession
 from restgdf import FeatureLayer
 
-try:
-    from utils import read_file, convert, output_format_dict
-except ImportError:
-    from .utils import read_file, convert, output_format_dict
+from utils import read_file, convert, output_format_dict
 
 __version__ = "0.2.1"
 
