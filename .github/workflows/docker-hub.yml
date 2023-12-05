@@ -23,6 +23,7 @@ jobs:
     - name: Build Docker image
       run: |
         docker build \
+          --target runtime \
           -t joshuasundance/geospatial-data-converter:${{ github.ref_name }} \
           -t joshuasundance/geospatial-data-converter:latest \
           .

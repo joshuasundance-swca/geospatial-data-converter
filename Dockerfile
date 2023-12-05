@@ -1,4 +1,4 @@
-FROM python:3.11-slim-bookworm
+FROM python:3.11-slim-bookworm AS base
 
 RUN adduser --uid 1000 --disabled-password --gecos '' appuser
 USER 1000
@@ -10,8 +10,16 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN pip install --user --no-cache-dir --upgrade pip
 COPY ./requirements.txt /home/appuser/requirements.txt
 RUN pip install --user --no-cache-dir  --upgrade -r /home/appuser/requirements.txt
-
 COPY geospatial-data-converter/ /home/appuser/geospatial-data-converter/
+
+
+FROM base AS test
+
+COPY dev-requirements.txt /home/appuser/dev-requirements.txt
+RUN pip install --user --no-cache-dir --upgrade -r /home/appuser/dev-requirements.txt
+
+
+FROM base AS runtime
 
 WORKDIR /workspace
 EXPOSE 7860

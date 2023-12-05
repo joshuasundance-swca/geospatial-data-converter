@@ -1,6 +1,7 @@
 [tool.pytest.ini_options]
 pythonpath = ["geospatial-data-converter"]
 testpaths = ["tests"]
+addopts = "--cov=geospatial-data-converter"
 
 [tool.bumpver]
 current_version = "0.2.1"
