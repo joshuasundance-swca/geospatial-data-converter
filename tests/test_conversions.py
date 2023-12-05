@@ -1,6 +1,6 @@
 import os
 import pytest
-from geospatial_data_converter.utils import convert, read_file
+from utils import convert, read_file
 
 input_exts = ["kml", "kmz", "geojson", "zip"]
 output_exts = ["KML", "ESRI Shapefile", "GeoJSON", "CSV", "OpenFileGDB"]

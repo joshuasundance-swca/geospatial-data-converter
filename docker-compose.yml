@@ -1,21 +1,24 @@
 version: '3.8'
 
 services:
-  geospatial_data_converter:
-    image: geospatial_data_converter:latest
+  geospatial-data-converter:
+    image: geospatial-data-converter:latest
     build: .
     ports:
       - "${APP_PORT:-7860}:${APP_PORT:-7860}"
     working_dir: /workspace
     command: [
       "streamlit", "run",
-      "/home/appuser/geospatial_data_converter/app.py",
+      "/home/appuser/geospatial-data-converter/app.py",
       "--server.port", "${APP_PORT:-7860}",
       "--server.address", "0.0.0.0",
       "--server.enableXsrfProtection=false"
     ]
   test:
-    image: geospatial_data_converter:latest  # Use the same image as your main service
+    image: geospatial-data-converter:latest  # Use the same image as your main service
     build: .
+    volumes:
+      - ./tests:/home/appuser/tests
+      - ./pyproject.toml:/home/appuser/pyproject.toml
     working_dir: /home/appuser
-    command: ["/bin/bash"]
+    command: ["pytest"]

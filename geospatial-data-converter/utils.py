@@ -5,10 +5,7 @@ from tempfile import TemporaryDirectory
 from typing import BinaryIO
 import geopandas as gpd
 
-try:
-    from kml_tricks import load_ge_data
-except ImportError:
-    from .kml_tricks import load_ge_data
+from kml_tricks import load_ge_data
 
 output_format_dict = {
     "ESRI Shapefile": ("shp", "zip", "application/zip"),  # must be zipped

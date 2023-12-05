@@ -23,9 +23,9 @@ jobs:
     - name: Build Docker image
       run: |
         docker build \
-          -t joshuasundance/geospatial_data_converter:${{ github.ref_name }} \
-          -t joshuasundance/geospatial_data_converter:latest \
+          -t joshuasundance/geospatial-data-converter:${{ github.ref_name }} \
+          -t joshuasundance/geospatial-data-converter:latest \
           .
 
     - name: Push to Docker Hub
-      run: docker push -a joshuasundance/geospatial_data_converter
+      run: docker push -a joshuasundance/geospatial-data-converter
