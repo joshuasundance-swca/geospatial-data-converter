@@ -1,7 +1,7 @@
 aiohttp==3.9.1
 beautifulsoup4==4.12.2
 geopandas==0.14.1
-lxml==4.9.3
+lxml==4.9.4
 numpy==1.26.2  # pinned for snyk
 pyogrio==0.7.2
 restgdf==1.0.0
