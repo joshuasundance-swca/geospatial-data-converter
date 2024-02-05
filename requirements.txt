@@ -1,9 +1,9 @@
-aiohttp==3.9.2
+aiohttp==3.9.3
 beautifulsoup4==4.12.3
-geopandas==0.14.2
+geopandas==0.14.3
 lxml==5.1.0
 numpy==1.26.3  # pinned for snyk
 pyogrio==0.7.2
 restgdf==1.0.0
-streamlit==1.30.0
+streamlit==1.31.0
 topojson==1.7
