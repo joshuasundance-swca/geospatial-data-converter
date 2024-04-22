@@ -1,4 +1,4 @@
-aiohttp==3.9.4
+aiohttp==3.9.5
 beautifulsoup4==4.12.3
 geopandas==0.14.3
 lxml==5.2.1
