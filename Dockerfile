@@ -1,4 +1,4 @@
-FROM python:3.11-slim-bookworm AS base
+FROM python:3.14.1-slim-bookworm AS base
 
 RUN adduser --uid 1000 --disabled-password --gecos '' appuser
 USER 1000
