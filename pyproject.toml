@@ -13,15 +13,15 @@ authors = [
     { name = "Joshua Bailey" },
 ]
 dependencies = [
-    "aiohttp==3.13.5",
-    "beautifulsoup4==4.14.3",
+    "aiohttp==3.14.1",
+    "beautifulsoup4==4.15.0",
     "defusedxml==0.7.1",
-    "geopandas==1.1.3",
-    "lxml==6.1.0",
-    "numpy==2.4.4",
-    "pyogrio==0.12.1",
+    "geopandas==1.1.4",
+    "lxml==6.1.1",
+    "numpy==2.5.0",
+    "pyogrio==0.13.0",
     "restgdf[geo]>=3,<4",
-    "streamlit==1.57.0",
+    "streamlit==1.58.0",
     "topojson==1.10",
 ]
 
@@ -35,7 +35,7 @@ dev = [
     "build>=1.2.2",
     "bumpver>=2024.1130",
     "pre-commit>=4.3.0",
-    "pytest==9.0.3",
+    "pytest==9.1.1",
     "pytest-cov==7.1.0",
     "twine>=6.1.0",
 ]
